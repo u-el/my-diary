@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>나의 일기장</title>
+  <title>감정산책</title>
   <link rel="stylesheet" href="style.css" />
   <!-- 고운돋움 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" />
@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#c2637a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="나의 일기장" />
+  <meta name="apple-mobile-web-app-title" content="감정산책" />
   <link rel="apple-touch-icon" href="icon.svg" />
 
   <!-- Firebase SDK -->
@@ -27,9 +27,8 @@
   <!-- ── 로그인 화면 ── -->
   <div id="view-login">
     <div class="login-card">
-      <div class="login-logo">🌸</div>
-      <h1 class="login-title">나의 일기장</h1>
-      <p class="login-subtitle">소중한 하루를 기록해요</p>
+      <img src="logo.svg" alt="감정산책" class="login-logo-img" />
+      <p class="login-subtitle">오늘 하루의 감정을 산책해요</p>
       <button class="google-login-btn" onclick="signInWithGoogle()">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="google-icon" />
         Google 계정으로 로그인
@@ -44,8 +43,7 @@
       <header>
         <div class="header-inner">
           <div>
-            <h1>나의 일기장</h1>
-            <p class="subtitle">오늘 하루를 기록해요</p>
+            <img src="logo.svg" alt="감정산책" class="header-logo" />
           </div>
           <div id="user-info" class="user-info">
             <img id="user-photo" src="" alt="프로필" class="user-photo" />

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <!-- 꽃잎들 -->
+  <g transform="translate(38, 40)">
+    <!-- 꽃잎 5개 -->
+    <ellipse cx="0" cy="-14" rx="5" ry="10" fill="#f4a7bb" transform="rotate(0)"/>
+    <ellipse cx="0" cy="-14" rx="5" ry="10" fill="#f4a7bb" transform="rotate(72)"/>
+    <ellipse cx="0" cy="-14" rx="5" ry="10" fill="#f9c4d4" transform="rotate(144)"/>
+    <ellipse cx="0" cy="-14" rx="5" ry="10" fill="#f4a7bb" transform="rotate(216)"/>
+    <ellipse cx="0" cy="-14" rx="5" ry="10" fill="#f9c4d4" transform="rotate(288)"/>
+    <!-- 꽃 중심 -->
+    <circle cx="0" cy="0" r="7" fill="#c2637a"/>
+    <circle cx="0" cy="0" r="4" fill="#fce4ec"/>
+    <!-- 작은 잎사귀 -->
+    <ellipse cx="18" cy="8" rx="7" ry="3.5" fill="#a8d8a8" transform="rotate(-30, 18, 8)"/>
+    <ellipse cx="-18" cy="10" rx="6" ry="3" fill="#b8e0b8" transform="rotate(20, -18, 10)"/>
+  </g>
+
+  <!-- 앱 이름 -->
+  <text x="70" y="34"
+    font-family="'Gowun Dodum', sans-serif"
+    font-size="26"
+    font-weight="bold"
+    fill="#c2637a"
+    letter-spacing="3">감정산책</text>
+
+  <!-- 영문 서브타이틀 -->
+  <text x="72" y="56"
+    font-family="'Gowun Dodum', Georgia, sans-serif"
+    font-size="12"
+    fill="#d4849a"
+    letter-spacing="5">EMOTIONAL WALK</text>
+
+  <!-- 장식선 -->
+  <line x1="70" y1="62" x2="270" y2="62" stroke="#f0c0cc" stroke-width="1" stroke-dasharray="3,4"/>
+</svg>

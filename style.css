@@ -23,9 +23,10 @@
   width: 90%;
 }
 
-.login-logo {
-  font-size: 3.5rem;
-  margin-bottom: 16px;
+.login-logo-img {
+  width: 240px;
+  margin: 0 auto 8px;
+  display: block;
 }
 
 .login-title {
@@ -69,6 +70,12 @@
 .google-icon {
   width: 20px;
   height: 20px;
+}
+
+/* 헤더 로고 */
+.header-logo {
+  width: 180px;
+  display: block;
 }
 
 /* ── 헤더 프로필 ── */

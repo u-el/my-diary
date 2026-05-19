@@ -1,7 +1,7 @@
 {
-  "name": "나의 일기장",
-  "short_name": "일기장",
-  "description": "오늘 하루를 기록하는 나만의 일기장",
+  "name": "감정산책",
+  "short_name": "감정산책",
+  "description": "오늘 하루를 기록하는 나만의 감정산책",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

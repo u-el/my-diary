@@ -6,7 +6,13 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8080)",
       "Bash(python3 -m http.server 8080 &>/tmp/diary-server.log & *)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git rm *)",
+      "Bash(git branch *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(cat ~/.ssh/id_ed25519.pub 2>/dev/null || echo \"파일 없음\")"
     ]
   }
 }
