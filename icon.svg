@@ -1,4 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="100" fill="#fce4ec"/>
-  <text x="256" y="320" font-size="280" text-anchor="middle" font-family="Apple Color Emoji, Segoe UI Emoji, sans-serif">🌸</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- 배경 -->
+  <rect width="512" height="512" rx="112" fill="#fce4ec"/>
+
+  <!-- 꽃잎 5개 -->
+  <g transform="translate(256, 256)">
+    <ellipse cx="0" cy="-72" rx="36" ry="68" fill="#f4a7bb" transform="rotate(0)"/>
+    <ellipse cx="0" cy="-72" rx="36" ry="68" fill="#f9c4d4" transform="rotate(72)"/>
+    <ellipse cx="0" cy="-72" rx="36" ry="68" fill="#f4a7bb" transform="rotate(144)"/>
+    <ellipse cx="0" cy="-72" rx="36" ry="68" fill="#f9c4d4" transform="rotate(216)"/>
+    <ellipse cx="0" cy="-72" rx="36" ry="68" fill="#f4a7bb" transform="rotate(288)"/>
+
+    <!-- 꽃 중심 -->
+    <circle cx="0" cy="0" r="52" fill="#c2637a"/>
+    <circle cx="0" cy="0" r="34" fill="#fce4ec"/>
+    <circle cx="0" cy="0" r="18" fill="#e88aa0"/>
+  </g>
 </svg>
