@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>나의 일기장</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- 고운돋움 폰트 -->
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" />
+  <!-- PWA 설정 -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#c2637a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="나의 일기장" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <!-- 내 Firebase 설정 -->
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+
+  <!-- ── 로그인 화면 ── -->
+  <div id="view-login">
+    <div class="login-card">
+      <div class="login-logo">🌸</div>
+      <h1 class="login-title">나의 일기장</h1>
+      <p class="login-subtitle">소중한 하루를 기록해요</p>
+      <button class="google-login-btn" onclick="signInWithGoogle()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="google-icon" />
+        Google 계정으로 로그인
+      </button>
+    </div>
+  </div>
+
+  <!-- ── 로그인 후 앱 본체 ── -->
+  <div id="app-body" style="display:none;">
+    <div class="container">
+
+      <header>
+        <div class="header-inner">
+          <div>
+            <h1>나의 일기장</h1>
+            <p class="subtitle">오늘 하루를 기록해요</p>
+          </div>
+          <div id="user-info" class="user-info">
+            <img id="user-photo" src="" alt="프로필" class="user-photo" />
+            <span id="user-name" class="user-name"></span>
+            <button class="logout-btn" onclick="signOutUser()">로그아웃</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- 목록 화면 -->
+      <div id="view-list">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tab-btn-list" onclick="switchTab('list')">📋 목록</button>
+          <button class="tab-btn" id="tab-btn-calendar" onclick="switchTab('calendar')">📅 캘린더</button>
+          <button class="tab-btn" id="tab-btn-stats" onclick="switchTab('stats')">📊 통계</button>
+        </div>
+
+        <!-- 목록 탭 -->
+        <div id="tab-list">
+          <div class="toolbar">
+            <input type="text" id="search-input" placeholder="일기 검색..." oninput="searchEntries(this.value)" />
+            <button class="btn-star-filter" id="btn-star-filter" onclick="toggleStarFilter()" title="즐겨찾기만 보기">☆</button>
+            <button class="btn-primary" onclick="showWrite()">+ 새 일기 쓰기</button>
+          </div>
+          <div id="entry-list"></div>
+          <p id="empty-msg" class="empty-msg" style="display:none;">아직 쓴 일기가 없어요. 첫 일기를 작성해 보세요!</p>
+        </div>
+
+        <!-- 캘린더 탭 -->
+        <div id="tab-calendar" style="display:none;">
+          <div class="calendar-header">
+            <button class="cal-nav-btn" onclick="prevMonth()">◀</button>
+            <span id="cal-title" class="cal-title"></span>
+            <button class="cal-nav-btn" onclick="nextMonth()">▶</button>
+          </div>
+          <div class="calendar-grid">
+            <div class="cal-weekday">일</div>
+            <div class="cal-weekday">월</div>
+            <div class="cal-weekday">화</div>
+            <div class="cal-weekday">수</div>
+            <div class="cal-weekday">목</div>
+            <div class="cal-weekday">금</div>
+            <div class="cal-weekday">토</div>
+          </div>
+          <div id="cal-body" class="calendar-grid"></div>
+        </div>
+
+        <!-- 통계 탭 -->
+        <div id="tab-stats" style="display:none;">
+          <div class="stats-month-nav">
+            <button class="cal-nav-btn" onclick="prevStatMonth()">◀</button>
+            <span id="stats-title" class="cal-title"></span>
+            <button class="cal-nav-btn" onclick="nextStatMonth()">▶</button>
+          </div>
+          <div id="stats-body"></div>
+        </div>
+      </div>
+
+      <!-- 작성/수정 화면 -->
+      <div id="view-write" style="display:none;">
+        <div class="card write-card">
+          <h2 id="write-title">새 일기 쓰기</h2>
+          <input type="hidden" id="edit-id" />
+          <div class="form-group">
+            <label>날짜</label>
+            <input type="date" id="entry-date" />
+          </div>
+          <div class="form-group">
+            <label>오늘의 기분 <span class="optional">(선택)</span></label>
+            <input type="hidden" id="entry-mood" value="" />
+            <div class="mood-selector" id="mood-selector"></div>
+          </div>
+          <div class="form-group">
+            <label>오늘의 날씨 <span class="optional">(선택)</span></label>
+            <input type="hidden" id="entry-weather" value="" />
+            <div class="weather-selector" id="weather-selector"></div>
+          </div>
+          <div class="form-group">
+            <label>태그 <span class="optional">(선택, 최대 5개)</span></label>
+            <div class="tag-input-wrap">
+              <div id="tag-chips" class="tag-chips"></div>
+              <div class="tag-input-row">
+                <input type="text" id="tag-input" placeholder="태그 입력 후 Enter 또는 + 버튼"
+                  maxlength="12" onkeydown="handleTagKeydown(event)" />
+                <button type="button" class="btn-tag-add" onclick="addTag()">+</button>
+              </div>
+              <p id="tag-limit-msg" class="tag-limit-msg" style="display:none;">태그는 최대 5개까지 넣을 수 있어요!</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>제목 <span class="optional">(선택)</span></label>
+            <input type="text" id="entry-title" placeholder="오늘의 제목을 입력해요" />
+          </div>
+          <div class="form-group">
+            <label>내용</label>
+            <textarea id="entry-body" rows="10" placeholder="오늘 하루를 자유롭게 적어요..."></textarea>
+          </div>
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="showList()">취소</button>
+            <button class="btn-primary" onclick="saveEntry()">저장하기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 상세 화면 -->
+      <div id="view-detail" style="display:none;">
+        <div class="card detail-card">
+          <div class="detail-header">
+            <div class="detail-date-row">
+              <span id="detail-date" class="detail-date"></span>
+              <span id="detail-mood" class="detail-mood"></span>
+              <span id="detail-weather" class="detail-weather"></span>
+            </div>
+            <div class="btn-row">
+              <button class="btn-secondary" onclick="showList()">목록으로</button>
+              <button class="btn-star" id="detail-star-btn" onclick="toggleStar()">☆</button>
+              <button class="btn-edit" onclick="editEntry()">수정</button>
+              <button class="btn-delete" onclick="deleteEntry()">삭제</button>
+            </div>
+          </div>
+          <h2 id="detail-title" class="detail-title"></h2>
+          <div id="detail-tags" class="detail-tags"></div>
+          <div id="detail-body" class="detail-body"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <!-- 서비스 워커 등록 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('PWA 준비 완료!'))
+        .catch(err => console.log('SW 오류:', err));
+    }
+  </script>
+</body>
+</html>

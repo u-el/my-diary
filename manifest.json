@@ -1,0 +1,19 @@
+{
+  "name": "나의 일기장",
+  "short_name": "일기장",
+  "description": "오늘 하루를 기록하는 나만의 일기장",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fce4ec",
+  "theme_color": "#c2637a",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
